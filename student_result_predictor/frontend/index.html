@@ -9,9 +9,26 @@
 </head>
 <body>
   <div class="container">
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <h1>🎓 Student Result Predictor</h1>
+      <p>Predict your academic performance with AI-powered insights</p>
+    </div>
+
     <div class="row">
       <div class="col-12">
         <form id="predictionForm">
+          
+          <!-- Progress Indicator -->
+          <div class="form-progress">
+            <div class="progress-header">
+              <span class="progress-title">Form Progress</span>
+              <span class="progress-count" id="progressCount">0/5 completed</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar-fill" id="progressBar" style="width: 0%"></div>
+            </div>
+          </div>
           
           <!-- Sleep & Study Tracker -->
           <div class="card">
@@ -21,12 +38,34 @@
             </div>
             <div class="card-body">
               <div class="mb-3">
-                <label class="form-label">Study hours per day (0 - 8)</label>
-                <input type="number" id="study_hours" name="study_hours" class="form-control" min="0" max="8" step="1" required>
+                <label class="form-label">
+                  <span>Study hours per day 
+                    <span class="info-tooltip">ℹ️
+                      <span class="tooltip-text">Average hours you spend studying each day</span>
+                    </span>
+                  </span>
+                  <span class="range-hint">0 - 8 hours</span>
+                </label>
+                <div class="input-wrapper">
+                  <span class="input-icon">📚</span>
+                  <input type="number" id="study_hours" name="study_hours" class="form-control" 
+                         min="0" max="8" step="1" placeholder="e.g., 5" required>
+                </div>
               </div>
               <div class="mb-3">
-                <label class="form-label">Sleep hours per day (4 - 9)</label>
-                <input type="number" id="sleep_hours" name="sleep_hours" class="form-control" min="4" max="9" step="1" required>
+                <label class="form-label">
+                  <span>Sleep hours per day 
+                    <span class="info-tooltip">ℹ️
+                      <span class="tooltip-text">Average hours of sleep you get each night</span>
+                    </span>
+                  </span>
+                  <span class="range-hint">4 - 9 hours</span>
+                </label>
+                <div class="input-wrapper">
+                  <span class="input-icon">💤</span>
+                  <input type="number" id="sleep_hours" name="sleep_hours" class="form-control" 
+                         min="4" max="9" step="1" placeholder="e.g., 7" required>
+                </div>
               </div>
             </div>
           </div>
@@ -39,8 +78,15 @@
             </div>
             <div class="card-body">
               <div class="mb-3">
-                <label class="form-label">Absences (0 - 20)</label>
-                <input type="number" id="absences" name="absences" class="form-control" min="0" max="20" step="1" required>
+                <label class="form-label">
+                  <span>Number of absences</span>
+                  <span class="range-hint">0 - 20 days</span>
+                </label>
+                <div class="input-wrapper">
+                  <span class="input-icon">📅</span>
+                  <input type="number" id="absences" name="absences" class="form-control" 
+                         min="0" max="20" step="1" placeholder="e.g., 2" required>
+                </div>
               </div>
             </div>
           </div>
@@ -53,8 +99,15 @@
             </div>
             <div class="card-body">
               <div class="mb-3">
-                <label class="form-label">Assignments completed (0 - 20)</label>
-                <input type="number" id="assignments_completed" name="assignments_completed" class="form-control" min="0" max="20" step="1" required>
+                <label class="form-label">
+                  <span>Assignments completed</span>
+                  <span class="range-hint">0 - 20 tasks</span>
+                </label>
+                <div class="input-wrapper">
+                  <span class="input-icon">✅</span>
+                  <input type="number" id="assignments_completed" name="assignments_completed" class="form-control" 
+                         min="0" max="20" step="1" placeholder="e.g., 15" required>
+                </div>
               </div>
             </div>
           </div>
@@ -67,14 +120,23 @@
             </div>
             <div class="card-body">
               <div class="mb-3">
-                <label class="form-label">Exam Score (40 - 100)</label>
-                <input type="number" id="exam_score" name="exam_score" class="form-control" min="40" max="100" step="1" required>
+                <label class="form-label">
+                  <span>Previous exam score</span>
+                  <span class="range-hint">40 - 100 points</span>
+                </label>
+                <div class="input-wrapper">
+                  <span class="input-icon">🎯</span>
+                  <input type="number" id="exam_score" name="exam_score" class="form-control" 
+                         min="40" max="100" step="1" placeholder="e.g., 85" required>
+                </div>
               </div>
             </div>
           </div>
 
           <div class="d-grid">
-            <button type="submit" class="btn btn-primary" id="predictBtn">Predict</button>
+            <button type="submit" class="btn btn-primary" id="predictBtn">
+              🚀 Predict My Results
+            </button>
           </div>
           
         </form>
@@ -91,6 +153,17 @@
         <div id="errorMessage" class="alert alert-danger mt-4" style="display: none;" role="alert"></div>
       </div>
     </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-content">
+        <div class="footer-text">Powered by AI & Machine Learning</div>
+        <div class="footer-badge">
+          <span>🤖</span>
+          <span>Accurate • Fast • Reliable</span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -103,6 +176,34 @@
     const loading = document.getElementById('loading');
     const errorMessage = document.getElementById('errorMessage');
     const predictBtn = document.getElementById('predictBtn');
+
+    // Progress tracking
+    const inputs = form.querySelectorAll('input[required]');
+    const progressBar = document.getElementById('progressBar');
+    const progressCount = document.getElementById('progressCount');
+    const totalInputs = inputs.length;
+
+    function updateProgress() {
+      let filledInputs = 0;
+      inputs.forEach(input => {
+        if (input.value && input.checkValidity()) {
+          filledInputs++;
+        }
+      });
+      
+      const percentage = (filledInputs / totalInputs) * 100;
+      progressBar.style.width = `${percentage}%`;
+      progressCount.textContent = `${filledInputs}/${totalInputs} completed`;
+    }
+
+    // Add event listeners to all inputs
+    inputs.forEach(input => {
+      input.addEventListener('input', updateProgress);
+      input.addEventListener('change', updateProgress);
+    });
+
+    // Initialize progress
+    updateProgress();
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();

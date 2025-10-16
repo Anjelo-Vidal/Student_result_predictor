@@ -9,6 +9,12 @@
 </head>
 <body>
   <div class="container">
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <h1>🎓 Student Result Predictor</h1>
+      <p>Predict your academic performance with AI-powered insights</p>
+    </div>
+
     <div class="row">
       <div class="col-12">
         <form action="{{ url_for('predict') }}" method="post">
@@ -21,12 +27,26 @@
             </div>
             <div class="card-body">
               <div class="mb-3">
-                <label class="form-label">Study hours per day (0 - 8)</label>
-                <input type="number" name="study_hours" class="form-control" min="0" max="8" step="1" required>
+                <label class="form-label">
+                  <span>Study hours per day</span>
+                  <span class="range-hint">0 - 8 hours</span>
+                </label>
+                <div class="input-wrapper">
+                  <span class="input-icon">📚</span>
+                  <input type="number" name="study_hours" class="form-control" 
+                         min="0" max="8" step="1" placeholder="e.g., 5" required>
+                </div>
               </div>
               <div class="mb-3">
-                <label class="form-label">Sleep hours per day (4 - 9)</label>
-                <input type="number" name="sleep_hours" class="form-control" min="4" max="9" step="1" required>
+                <label class="form-label">
+                  <span>Sleep hours per day</span>
+                  <span class="range-hint">4 - 9 hours</span>
+                </label>
+                <div class="input-wrapper">
+                  <span class="input-icon">💤</span>
+                  <input type="number" name="sleep_hours" class="form-control" 
+                         min="4" max="9" step="1" placeholder="e.g., 7" required>
+                </div>
               </div>
             </div>
           </div>
@@ -39,8 +59,15 @@
             </div>
             <div class="card-body">
               <div class="mb-3">
-                <label class="form-label">Absences (0 - 20)</label>
-                <input type="number" name="absences" class="form-control" min="0" max="20" step="1" required>
+                <label class="form-label">
+                  <span>Number of absences</span>
+                  <span class="range-hint">0 - 20 days</span>
+                </label>
+                <div class="input-wrapper">
+                  <span class="input-icon">📅</span>
+                  <input type="number" name="absences" class="form-control" 
+                         min="0" max="20" step="1" placeholder="e.g., 2" required>
+                </div>
               </div>
             </div>
           </div>
@@ -53,8 +80,15 @@
             </div>
             <div class="card-body">
               <div class="mb-3">
-                <label class="form-label">Assignments completed (0 - 10)</label>
-                <input type="number" name="assignments_completed" class="form-control" min="0" max="10" step="1" required>
+                <label class="form-label">
+                  <span>Assignments completed</span>
+                  <span class="range-hint">0 - 10 tasks</span>
+                </label>
+                <div class="input-wrapper">
+                  <span class="input-icon">✅</span>
+                  <input type="number" name="assignments_completed" class="form-control" 
+                         min="0" max="10" step="1" placeholder="e.g., 8" required>
+                </div>
               </div>
             </div>
           </div>
@@ -67,14 +101,21 @@
             </div>
             <div class="card-body">
               <div class="mb-3">
-                <label class="form-label">Exam Score (40 - 100)</label>
-                <input type="number" name="exam_score" class="form-control" min="40" max="100" step="1" required>
+                <label class="form-label">
+                  <span>Previous exam score</span>
+                  <span class="range-hint">40 - 100 points</span>
+                </label>
+                <div class="input-wrapper">
+                  <span class="input-icon">🎯</span>
+                  <input type="number" name="exam_score" class="form-control" 
+                         min="40" max="100" step="1" placeholder="e.g., 85" required>
+                </div>
               </div>
             </div>
           </div>
 
           <div class="d-grid">
-            <button class="btn btn-primary">Predict</button>
+            <button class="btn btn-primary">🚀 Predict My Results</button>
           </div>
           
         </form>
